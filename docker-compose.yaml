@@ -1,0 +1,28 @@
+services:
+  rabbitmq:
+    image: 'rabbitmq:management-alpine'
+    container_name: 'rabbitmq'
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ./docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ./docker-conf/rabbitmq/log/:/var/log/rabbitmq/
+    networks:
+      - docker_network
+
+  postgres:
+    image: 'postgres:alpine'
+    container_name: 'db'
+    restart: always
+    environment:
+      - POSTGRES_USER=jduser
+      - POSTGRES_PASSWORD=jdpassword
+    ports:
+      - 5432:5432
+    volumes:
+      - ./docker-conf/postgres/data/:/var/lib/postgresql/data/
+    # - ./docker-conf/postgres/sql/setup.sql:/docker-entrypoint-initdb.d/
+
+networks:
+  docker_network:
