@@ -21,4 +21,8 @@ public class AccountService {
         accountMapper.createAccount(account);
         return account;
     }
+
+    public Account getAccountById(String accountId) {
+        return accountMapper.getAccountById(accountId);
+    }
 }
