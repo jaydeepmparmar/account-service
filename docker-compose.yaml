@@ -6,8 +6,10 @@ services:
       - 5672:5672
       - 15672:15672
     volumes:
-      - ./docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
-      - ./docker-conf/rabbitmq/log/:/var/log/rabbitmq/
+      - ./docker-volume/rabbitmq/data/:/var/lib/rabbitmq/
+      - ./docker-volume/rabbitmq/log/:/var/log/rabbitmq/
+      - ./docker-setup/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+      - ./docker-setup/definitions.json:/etc/rabbitmq/definitions.json
     networks:
       - docker_network
 
@@ -21,8 +23,8 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ./docker-conf/postgres/data/:/var/lib/postgresql/data/
-    # - ./docker-conf/postgres/sql/setup.sql:/docker-entrypoint-initdb.d/
+      - ./docker-volume/postgres/data/:/var/lib/postgresql/data/
+      - ./docker-setup/setup.sql:/docker-entrypoint-initdb.d/setup.sql
 
 networks:
   docker_network:

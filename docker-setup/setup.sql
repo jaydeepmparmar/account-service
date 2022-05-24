@@ -1,6 +1,7 @@
 create TABLE IF NOT EXISTS accounts (
     accountId INT GENERATED ALWAYS AS IDENTITY,
     customerId VARCHAR(255) NOT NULL,
+    country VARCHAR(255),
     balanceList jsonb,
     PRIMARY KEY(accountId)
 );

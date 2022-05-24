@@ -1,16 +1,23 @@
 package com.tuum.account.controller;
 
-import com.tuum.account.model.Account;
+import com.tuum.account.entity.Account;
+import com.tuum.account.model.AccountDTO;
 import com.tuum.account.service.AccountService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
-@AllArgsConstructor
+@RequestMapping("/accounts")
+@RequiredArgsConstructor
+@Slf4j
 public class AccountController {
     /** Create account
 Creates a bank account for the customer and returns an account object
@@ -23,8 +30,8 @@ API must create balances for the account in given currencies. */
     private final AccountService accountService;
 
     @PostMapping
-    public ResponseEntity<Account> createAccount(@RequestBody String accountId) {
-        return new ResponseEntity<>(accountService.createAccount(), HttpStatus.CREATED);
+    public ResponseEntity<Account> createAccount(@Valid @RequestBody AccountDTO account) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(accountService.createAccount(account));
     }
 
 
